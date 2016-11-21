@@ -6,8 +6,7 @@ var bodyParser      = require('body-parser');
 var morgan          = require('morgan');
 var mongoose        = require('mongoose');
 var jwt             = require('jsonwebtoken');
-var expressJwt      = require('express-jwt')
-var cors            = require('cors');
+var expressJwt      = require('express-jwt');
 var request         = require('request');
 
 // Server files
@@ -20,7 +19,6 @@ var models          = require('./models');
 var port    = process.env.PORT || 8080;
 var app     = module.exports = express();
 
-app.use(cors);
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -35,10 +33,15 @@ var Profile = mongoose.model("Profile");
 
 // Auth
 app.post('/auth', routes.auth);
+
+app.get('/test', function(req, res) {
+  res.json({message: "All right m8"});
+});
+
 app.post('/mirror', function(req ,res) {
   console.log("yay");
   res.json(req.body);
-})
+});
 
 // User
 app.get('/api/profile', routes.profile.get);
