@@ -7,6 +7,7 @@ var morgan          = require('morgan');
 var mongoose        = require('mongoose');
 var jwt             = require('jsonwebtoken');
 var expressJwt      = require('express-jwt')
+var cors            = require('cors');
 var request         = require('request');
 
 // Server files
@@ -19,6 +20,7 @@ var models          = require('./models');
 var port    = process.env.PORT || 8080;
 var app     = module.exports = express();
 
+app.use(cors);
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -31,18 +33,47 @@ mongoose.connect(config.database);
 // importing models
 var Profile = mongoose.model("Profile");
 
-// get routes
-app.get('/api/user', routes.user.get);
-app.get('/api/project/all', routes.project.getAll);
+// Auth
+app.post('/auth', routes.auth);
+app.post('/mirror', function(req ,res) {
+  console.log("yay");
+  res.json(req.body);
+})
+
+// User
+app.get('/api/profile', routes.profile.get);
+app.get('/api/profile/count', routes.profile.count);
+// pre-cadastrar usuario
+// app.post('/api/profile', routes.profile.post);
+
+
+// Project
 app.get('/api/project', routes.project.get);
-
+app.get('/api/project/count', routes.project.count);
+// requires profile, project and operation on body
+app.put('/api/project/member', routes.project.postMember);
 app.post('/api/project', routes.project.post);
-app.post('/api/project/new/member', routes.project.addMember);
-// app.post('/api/project/new/frequency', routes.project.addFrequency);
-// app.post('/api/project/new/request', routes.project.addRequest);
 
-app.post('/newUser', routes.user.post);
-app.post('/login', routes.login);
+
+// Event
+app.get('/api/event', routes.event.get);
+app.get('/api/event/count', routes.event.count);
+app.post('/api/event', routes.event.post);
+app.delete('/api/event', routes.event.delete);
+
+
+// app.get('/api/frequency', routes.frequency.get);
+// app.post('/api/frequency', routes.frequency.post);
+// send json on members and hours to modify/add
+// app.put('/api/frequency', routes.frequency.put);
+
+
+
+// app.get('/api/request', routes.request.get);
+// app.post('/api/request', routes.request.post);
+
+
+
 
 app.post('/mirror', function(req, res) {
   console.log(req.body);

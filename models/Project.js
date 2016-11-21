@@ -1,4 +1,4 @@
-var mongoose = require('mongoose')
+var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema
 
@@ -8,7 +8,7 @@ if (!mongoose.connection.readyState == 0) {
 
 // members have different access levels
 var projectSchema = new Schema({
-  name: {type: String, required: true},
+  name: {type: String, required: true, unique: true},
   description: {type: String, required: true},
   logo: {type: String, required: true},
   members: {type: [{_id: Schema.Types.ObjectId, level: Number}], default: []},

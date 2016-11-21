@@ -3,28 +3,17 @@ var mongoose = require('mongoose');
 var config = require('../config');
 var models = require('../models');
 var jwt = require('jsonwebtoken');
+var helpers = require('../helpers')
 
 var Profile = mongoose.model('Profile');
 module.exports = {
   get: function(req, res) {
-    Profile.findOne(req.userId, function(err, profile) {
-      if(err) {
-        res.status(500).send("Something went wrong: " + err);
-        res.end();
-      }
-      else {
-        if (profile) {
-          console.log("Sent user data: " + JSON.stringify(profile));
-          res.json(profile);
-        }
-        else {
-          console.log("User not found, invalid token?");
-          console.log(req.userId);
-          res.status(404).send("User not found!");
-          res.end();
-        }
-      }
-    });
+    if (!req.query.id) {
+      Profile.find({}, helpers.client.findAll(req, res, "Profile"));
+    }
+    else {
+      Profile.findOne({_id: req.query.id}, helpers.client.findOne(req, res, "Profile"));
+    }
   },
   post: function(req, res) {
     if (req.body.access_token) {
@@ -71,5 +60,8 @@ module.exports = {
         });
       });
     }
+  },
+  count: function(req, res) {
+    Profile.count({}, helpers.client.count(req, res, "Profile"));
   }
 }
