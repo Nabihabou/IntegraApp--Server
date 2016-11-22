@@ -19,7 +19,7 @@ module.exports = function(req, res) {
         console.log(token);
         console.log("An user logged in: " + profile._id);
         res.json({
-          id: profile._id,
+          google_id: profile._id,
           token: token
         });
       } else if(googleRequestResponse.id){
@@ -40,7 +40,7 @@ module.exports = function(req, res) {
             res.end();
           }
           else {
-            var token = jwt.sign({_id: obj._id}, config.secret, {expiresIn: "1h"});
+            var token = jwt.sign({_id: obj._id}, config.secret, {expiresIn: "24h"});
             googleParams.status = "success";
             googleParams.token = token;
             console.log("An user was created: ");

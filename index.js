@@ -39,7 +39,6 @@ app.get('/test', function(req, res) {
 });
 
 app.post('/mirror', function(req ,res) {
-  console.log("yay");
   res.json(req.body);
 });
 
