@@ -25,7 +25,8 @@ var profileSchema = new Schema({
   cep: {type: String, default: ""},
   address: {type: String, default: ""},
   city: {type: String, default: ""},
-  birthday: {type: Date, default: Date.now}
+  birthday: {type: Date, default: Date.now},
+  projects: {type: [Schema.Types.ObjectId], default: []}
 })
 
 module.exports = mongoose.model('Profile', profileSchema)
