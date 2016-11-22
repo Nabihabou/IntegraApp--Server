@@ -8,11 +8,17 @@ var helpers = require('../helpers')
 var Profile = mongoose.model('Profile');
 module.exports = {
   get: function(req, res) {
-    if (!req.query.id) {
+    if (!req.query.id && !req.query.email && !req.query.name) {
       Profile.find({}, helpers.client.findAll(req, res, "Profile"));
     }
-    else {
+    else if(req.query.id){
       Profile.findOne({_id: req.query.id}, helpers.client.findOne(req, res, "Profile"));
+    }
+    else if(req.query.email) {
+      Profile.find({google_email: {$regex: /req.query.email/, $options: 'i'}}, helpers.client.findAll(req, res, "Profile"));
+    }
+    else if(req.query.name) {
+      Profile.find({google_name: req.query.name}, helpers.client.find(req, res, "Profile"));
     }
   },
   post: function(req, res) {
