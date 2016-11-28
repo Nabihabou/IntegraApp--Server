@@ -68,10 +68,10 @@ app.post('/api/event', routes.event.post);
 app.delete('/api/event', routes.event.delete);
 
 
-// app.get('/api/frequency', routes.frequency.get);
-// app.post('/api/frequency', routes.frequency.post);
-// // send json on members and hours to modify/add
-// app.put('/api/frequency', routes.frequency.put);
+app.get('/api/frequency', routes.frequency.get);
+app.post('/api/frequency', routes.frequency.post);
+// send json on members and hours to modify/add
+app.put('/api/frequency', routes.frequency.put);
 
 
 
