@@ -31,6 +31,10 @@ mongoose.connect(config.database);
 // importing models
 var Profile = mongoose.model("Profile");
 
+app.get('/', function(req, res) {
+  res.sendfile('./login.html');
+})
+
 // Auth
 app.post('/auth', routes.auth);
 
@@ -66,7 +70,7 @@ app.delete('/api/event', routes.event.delete);
 
 // app.get('/api/frequency', routes.frequency.get);
 // app.post('/api/frequency', routes.frequency.post);
-// send json on members and hours to modify/add
+// // send json on members and hours to modify/add
 // app.put('/api/frequency', routes.frequency.put);
 
 

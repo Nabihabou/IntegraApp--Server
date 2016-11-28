@@ -15,6 +15,7 @@ module.exports = {
       Profile.findOne({_id: req.query.id}, helpers.client.findOne(req, res, "Profile"));
     }
     else if(req.query.email) {
+      var findEmai = RegExp()
       Profile.find({google_email: {$regex: /req.query.email/, $options: 'i'}}, helpers.client.findAll(req, res, "Profile"));
     }
     else if(req.query.name) {

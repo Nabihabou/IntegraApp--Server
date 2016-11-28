@@ -1,0 +1,33 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="955592758900-rup02fmupousp72vdt2pm6sncl2i9dku.apps.googleusercontent.com">
+</head>
+<body>
+  <div class="g-signin2" data-onsuccess="onSignIn"></div>
+  <a href="#" onclick="onLogOut();" style="float: right;" >Sign-Out</a>
+  <script>
+  var node = document.createElement("LI");
+  var textnode = document.createTextNode("Water");
+  node.appendChild(textnode);
+  document.getElementById("myList").appendChild(node);
+
+  function onSignIn(googleUser) {
+    var Token = googleUser.Zi.access_token;
+    if(Token) {
+      var node = document.createElement("p");
+      var t = document.createTextNode(Token);
+      node.appendChild(t);
+      document.getElementsByTagName("body")[0].appendChild(node);
+    }
+  }
+  function onLogOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function() {
+      alert("Signed out")
+    })
+  }
+  </script>
+</body>
+</html>
