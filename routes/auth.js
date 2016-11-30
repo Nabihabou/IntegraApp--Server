@@ -6,10 +6,11 @@ var jwt = require('jsonwebtoken');
 
 var Profile = mongoose.model('Profile');
 module.exports = function(req, res) {
-  console.log("access_token: " + req.body.access_token);
-  request.get('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + req.body.access_token, function(response, body) {
+  request.get('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + req.body.idToken, function(response, body) {
     var googleRequestResponse = JSON.parse(body.body);
-    Profile.findOne({google_id: googleRequestResponse.id}, function(err, profile) {
+    console.log(googleRequestResponse);
+
+    Profile.findOne({google_id: req.body.id}, function(err, profile) {
       if(err) {
         console.log(err);
         res.status(500).send("Something went wrong: " + err);
@@ -22,11 +23,11 @@ module.exports = function(req, res) {
           google_id: profile._id,
           token: token
         });
-      } else if(googleRequestResponse.id){
+      } else if(req.body.id){
         var googleParams = {
-          google_id: googleRequestResponse.id,
+          google_id: req.body.id,
           google_email: googleRequestResponse.email,
-          google_name: googleRequestResponse.name,
+          google_name: googleRequestResponse.given_name + " " + googleRequestResponse.family_name,
           google_picture: googleRequestResponse.picture
         }
         console.log(googleParams);
