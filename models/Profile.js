@@ -8,7 +8,7 @@ if (!mongoose.connection.readyState == 0) {
 // The reason why google_id is not _id is because a Profile can exist before a
 // google_id is assigned to it, in this case google_id = "" along with all fields except email
 var profileSchema = new Schema({
-  google_id: {type:String, required:true, unique: true},
+  google_id: {type:String, default: ""},
   google_picture: {type: String, default: ""},
   google_name: {type: String, default: ""},
   google_email: {type: String, required: true, unique: true},

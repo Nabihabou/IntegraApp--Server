@@ -23,6 +23,13 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(middlewares.cos_configs);
+app.use(function(req, res, next) {
+  if(req.headers.authorization) {
+    req.token = req.headers.authorization.split(' ')[1];
+  }
+  next();
+});
+
 app.use('/api', expressJwt({secret: config.secret}));
 
 mongoose.Promise = require('bluebird');
@@ -36,7 +43,7 @@ app.get('/', function(req, res) {
 })
 
 // Auth
-app.post('/auth', routes.auth);
+app.get('/auth', routes.auth);
 
 app.get('/test', function(req, res) {
   res.json({message: "All right m8"});
@@ -50,7 +57,7 @@ app.post('/mirror', function(req ,res) {
 app.get('/api/profile', routes.profile.get);
 app.get('/api/profile/count', routes.profile.count);
 // pre-cadastrar usuario
-// app.post('/api/profile', routes.profile.post);
+app.post('/api/profile', routes.profile.post);
 
 
 // Project
