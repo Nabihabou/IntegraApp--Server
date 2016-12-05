@@ -14,22 +14,27 @@ module.exports = {
     }
   },
   post: function(req, res) {
-    var new_project = new Project({
-      name: req.body.name,
-      description: req.body.description,
-      logo: req.body.logo
-    });
+    var profileId = jwt.decode(req.token, config.secret)._id;
+    Profile.findOne({_id: profileId}, function(error, object) {
+      if(object && object.is_admin) {
+        var new_project = new Project({
+          name: req.body.name,
+          description: req.body.description,
+          logo: req.body.logo
+        });
 
-    new_project.save(function(err, obj) {
-      if(err) {
-        console.log("Something went wrong: " + err);
-        res.status(500).send("Something went wrong: " + err);
-        res.end();
-      }
-      else {
-        console.log("A project was created: ");
-        console.log(JSON.stringify(obj));
-        res.json(obj);
+        new_project.save(function(err, obj) {
+          if(err) {
+            console.log("Something went wrong: " + err);
+            res.status(500).send("Something went wrong: " + err);
+            res.end();
+          }
+          else {
+            console.log("A project was created: ");
+            console.log(JSON.stringify(obj));
+            res.json(obj);
+          }
+        });
       }
     });
   },
