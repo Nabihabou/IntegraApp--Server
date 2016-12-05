@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var config = require('../config');
 var models = require('../models');
 var jwt = require('jsonwebtoken');
-var helpers = require('../helpers')
+var helpers = require('../helpers');
 
 var Profile = mongoose.model('Profile');
 module.exports = {

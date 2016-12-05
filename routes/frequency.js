@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
+var config = require('../config');
 var models = require('../models');
+var jwt = require('jsonwebtoken');
 var helpers = require('../helpers')
 
 var Frequency = mongoose.model('Frequency');
