@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var models = require('../models');
-var helpers = require('../helpers')
+var jwt = require('jsonwebtoken');
+var helpers = require('../helpers');
 
 var Profile = mongoose.model('Profile');
 var Project = mongoose.model('Project');
