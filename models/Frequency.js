@@ -9,6 +9,8 @@ if (!mongoose.connection.readyState == 0) {
 var frequencySchema = new Schema({
   author: {type: Schema.Types.ObjectId, required: true},
   project: {type: Schema.Types.ObjectId, required: true},
+  title: {type: String, require: true},
+  description: {type: String, required: true},
   category: {type: String, enum: ["Reunião", "Módulo", "Atividade"], required: true},
   duration: {type: Number, required: true},
   date: {type: Date, required: true},
