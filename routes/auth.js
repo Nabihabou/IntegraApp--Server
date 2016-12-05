@@ -22,7 +22,7 @@ module.exports = function(req, res) {
               console.log("User logged in.");
               var token = jwt.sign({_id: obj._id}, config.secret, {expiresIn: "48h"});
               console.log("An user Logged-in: " + token);
-              res.json({token: token, google_id: obj.google_id});
+              res.json({token: token, google_id: obj.google_id, is_admin: obj.is_admin});
             }
             else {
               Profile.findOne({google_email: googleRequestResponse.email}, function(err, obj) {
@@ -39,7 +39,7 @@ module.exports = function(req, res) {
                       res.json({error: err, message: "Error adding google_id to user"});
                     } else if(updatedObj) {
                       console.log("User registration completed and logged in!");
-                      res.json({user: updatedObj, token: token});
+                      res.json({user: updatedObj, token: token, is_admin: updatedObj.is_admin});
                     }
                   })
                 }
