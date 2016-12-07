@@ -15,6 +15,36 @@ module.exports = {
       Project.findOne({_id: req.query.id}, helpers.client.findOne(req, res, "Project"));
     }
   },
+  myProjects: function(req, res) {
+    var profileId = jwt.decode(req.token, config.secret)._id;
+    Profile.findOne({_id: profileId}, function(error, object) {
+      if(object && object.is_admin) {
+        Project.find({}, helpers.client.findAll(req, res, "Project"));
+      } else if(object) {
+        Project.find({_id: {$in: object.projects}}, helpers.client.findAll(req, res, "Project"));
+      }
+    });
+  },
+  delete: function(req, res) {
+    if(req.body.id) {
+      Project.remove({_id: req.body.id}, function(err) {
+        if(err) {
+          console.log(err);
+          res.end();
+        } else {
+          console.log("Project deleted: " + req.body.id);
+          Profile.update({}, {$pop: {projects: req.body.id}}, function(error, project) {
+            if (error) {
+              console.log(error);
+              res.end();
+            } else {
+              res.json(project);
+            }
+          });
+        }
+      })
+    }
+  },
   post: function(req, res) {
     var profileId = jwt.decode(req.token, config.secret)._id;
     Profile.findOne({_id: profileId}, function(error, object) {
