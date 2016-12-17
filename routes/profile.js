@@ -21,6 +21,18 @@ module.exports = {
       Profile.findOne({google_id: req.query.google_id}, helpers.client.findOne(req, res, "Profile"));
     }
   },
+  myProfile: function(req, res) {
+    var profileId = jwt.decode(req.token, config.secret)._id;
+    Profile.findOne({_id: profileId}, function(error, obj) {
+      if (obj) {
+        res.json(obj);
+      } else if(error) {
+        console.log(error);
+        res.send(error);
+        res.end();
+      }
+    });
+  },
   post: function(req, res) {
     var profileId = jwt.decode(req.token, config.secret)._id;
     Profile.findOne({_id: profileId}, function(error, object) {

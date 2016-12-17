@@ -7,9 +7,15 @@ var jwt = require('jsonwebtoken');
 
 var Profile = mongoose.model('Profile');
 module.exports = function(req, res) {
-  if(req.query.idToken) {
+  if(req.query.idToken || req.query.access_token) {
     console.log(req.query.idToken);
-    request.get('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + req.query.idToken, function(response, body) {
+    var link = ""
+    if (req.query.access_token) {
+      link = "https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=" + req.query.access_token
+    } else {
+      link = "https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=" + req.query.idToken
+    }
+    request.get(link, function(response, body) {
       if(body) {
         console.log(body.body);
         var googleRequestResponse = JSON.parse(body.body);
