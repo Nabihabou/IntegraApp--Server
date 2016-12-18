@@ -7,15 +7,17 @@ var jwt = require('jsonwebtoken');
 
 var Profile = mongoose.model('Profile');
 module.exports = function(req, res) {
-  if(req.query.idToken || req.query.access_token) {
+  if(req.query.idToken || req.query.access_token || req.query.code) {
     console.log(req.query.idToken);
-    var link = ""
+    var link = "";
+
     if (req.query.access_token) {
-      link = "https://www.googleapis.com/oauth2/v3/userinfo?access_token=" + req.query.access_token
+      link = 'https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=' + req.query.access_token
     } else {
-      link = "https://www.googleapis.com/oauth2/v3/userinfo?id_token=" + req.query.idToken
+      link = 'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + req.query.idToken
     }
     request.get(link, function(response, body) {
+      console.log(response);
       if(body) {
         console.log(body.body);
         var googleRequestResponse = JSON.parse(body.body);
@@ -40,8 +42,8 @@ module.exports = function(req, res) {
                   console.log("Pre-registered user logged in!");
                   var token = jwt.sign({_id: obj._id}, config.secret, {expiresIn: "48h"});
                   obj.google_id = googleRequestResponse.sub;
-                  obj.google_name = googleRequestResponse.name;
-                  obj.google_picture = googleRequestResponse.picture;
+                  obj.google_name = req.query.google_name;
+                  obj.google_picture = req.query.google_picture;
                   obj.save(function(err, updatedObj) {
                     if(err) {
                       console.log(err);
