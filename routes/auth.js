@@ -11,9 +11,9 @@ module.exports = function(req, res) {
     console.log(req.query.idToken);
     var link = ""
     if (req.query.access_token) {
-      link = "https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=" + req.query.access_token
+      link = "https://www.googleapis.com/oauth2/v3/userinfo?access_token=" + req.query.access_token
     } else {
-      link = "https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=" + req.query.idToken
+      link = "https://www.googleapis.com/oauth2/v3/userinfo?id_token=" + req.query.idToken
     }
     request.get(link, function(response, body) {
       if(body) {
@@ -21,6 +21,7 @@ module.exports = function(req, res) {
         var googleRequestResponse = JSON.parse(body.body);
         if (googleRequestResponse.sub) {
           Profile.findOne({google_id: googleRequestResponse.sub}, function(err, obj) {
+            console.log(googleRequestResponse);
             if(err) {
               console.log(err);
               res.json({error: err, message: "Error Finding user by google_id"});
@@ -39,6 +40,8 @@ module.exports = function(req, res) {
                   console.log("Pre-registered user logged in!");
                   var token = jwt.sign({_id: obj._id}, config.secret, {expiresIn: "48h"});
                   obj.google_id = googleRequestResponse.sub;
+                  obj.google_name = googleRequestResponse.name;
+                  obj.google_picture = googleRequestResponse.picture;
                   obj.save(function(err, updatedObj) {
                     if(err) {
                       console.log(err);
