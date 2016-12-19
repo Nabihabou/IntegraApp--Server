@@ -8,6 +8,15 @@ var Frequency = mongoose.model('Frequency');
 var Profile = mongoose.model('Profile');
 var Project = mongoose.model('Project');
 
+var has_level = function(memberArray, id) {
+  for(var i = 0;i < memberArray.length;i++) {
+    if(memberArray[i]._id == id && memberArray[i].level >= 1) {
+      return true;
+    }
+  }
+  return false;
+}
+
 module.exports = {
   get: function(req, res) {
     Frequency.find({project: req.query.projectId}, helpers.client.findAll(req, res, "Frequency"));
@@ -15,12 +24,11 @@ module.exports = {
   post: function(req, res) {
     var profileId = jwt.decode(req.token, config.secret)._id;
     Profile.findOne({_id: profileId}, function(error, object) {
-      if(object && object.is_admin) {
+      if(object && (object.is_admin || has_level(object.members, profileId))) {
         var new_freq = new Frequency({
           author: profileId,
           project: req.body.projectId,
           title: req.body.title,
-          description: req.body.description,
           category: req.body.category,
           duration: req.body.duration,
           date: req.body.date

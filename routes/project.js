@@ -16,8 +16,6 @@ var has_level = function(memberArray, desired_level, id) {
   }
 }
 
-
-
 module.exports = {
   get: function(req, res) {
     if (!req.query.id) {
