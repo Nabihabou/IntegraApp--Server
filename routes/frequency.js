@@ -41,7 +41,7 @@ module.exports = {
             res.end();
           }
           else {
-            Project.update({_id: req.body.projectId}, {$push: {frequencies: obj._id}});
+            Project.update({_id: mongoose.Types.ObjectId(req.body.projectId)}, {$push: {frequencies: obj._id}});
             console.log("A frequency was created: ");
             console.log(JSON.stringify(obj));
             res.json(obj);
