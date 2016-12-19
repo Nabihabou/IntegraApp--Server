@@ -27,7 +27,7 @@ module.exports = {
       if(object && (object.is_admin || has_level(object.members, profileId))) {
         var new_freq = new Frequency({
           author: profileId,
-          project: req.body.projectId,
+          project: mongoose.Types.ObjectId(req.body.projectId),
           title: req.body.title,
           category: req.body.category,
           duration: req.body.duration,
@@ -35,16 +35,15 @@ module.exports = {
         });
 
         new_freq.save(function(err, obj) {
-          if(err) {
-            console.log("Something went wrong: " + err);
-            res.status(500).send("Something went wrong: " + err);
-            res.end();
-          }
-          else {
+          if(obj) {
             Project.update({_id: mongoose.Types.ObjectId(req.body.projectId)}, {$push: {frequencies: obj._id}});
             console.log("A frequency was created: ");
             console.log(JSON.stringify(obj));
             res.json(obj);
+          } else {
+            console.log("Something went wrong: " + err);
+            res.status(500).send("Something went wrong: " + err);
+            res.end();
           }
         });
       }
