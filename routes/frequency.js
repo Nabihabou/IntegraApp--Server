@@ -36,15 +36,14 @@ module.exports = {
 
         new_freq.save(function(err, obj) {
           if(obj) {
-            Project.findOne({_id:mongoose.Types.ObjectId(req.body.projectId)}, function(error, object) {
-              if(object) {
-                console.log(object);
+            Project.update({_id: mongoose.Types.ObjectId(req.body.projectId)}, {$push: {frequencies: obj._id}}, function(error, object) {
+              if (object) {
+                console.log("A frequency was created: ");
+                console.log(JSON.stringify(obj));
+                res.json(object);
               }
-            })
-            Project.update({_id: mongoose.Types.ObjectId(req.body.projectId)}, {$push: {frequencies: obj._id}});
-            console.log("A frequency was created: ");
-            console.log(JSON.stringify(obj));
-            res.json(obj);
+            });
+
           } else {
             console.log("Something went wrong: " + err);
             res.status(500).send("Something went wrong: " + err);
