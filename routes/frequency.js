@@ -19,7 +19,7 @@ var has_level = function(memberArray, id) {
 
 module.exports = {
   get: function(req, res) {
-    Frequency.find({project: req.query.projectId}, helpers.client.findAll(req, res, "Frequency"));
+    Frequency.find({project: mongoose.Types.ObjectId(req.query.projectId)}, helpers.client.findAll(req, res, "Frequency"));
   },
   post: function(req, res) {
     var profileId = jwt.decode(req.token, config.secret)._id;
@@ -52,5 +52,9 @@ module.exports = {
         });
       }
     });
+  },
+  put: function(req, res) {
+    
   }
+
 }

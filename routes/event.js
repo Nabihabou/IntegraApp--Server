@@ -18,31 +18,37 @@ module.exports = {
     }
   },
   post: function(req, res) {
-    var new_event = new Event({
-      title: req.body.title,
-      author: mongoose.Types.ObjectId(req.user._id),
-      project: mongoose.Types.ObjectId(req.body.project),
-      startDate: Date(req.body.startDate),
-      endDate: Date(req.body.endDate)
-    });
+    var profileId = jwt.decode(req.token, config.secret)._id;
+    Profile.findOne({_id: profileId}, function(error, obj) {
+      if (obj) {
+        var new_event = new Event({
+          title: req.body.title,
+          author: obj._id,
+          place: req.body.place,
+          project: mongoose.Types.ObjectId(req.body.project),
+          startDate: Date(req.body.startDate),
+          endDate: Date(req.body.endDate)
+        });
 
-    new_event.save(function(err, obj) {
-      if(err) {
-        console.log("Something went wrong: " + err);
-        res.status(500).send("Something went wrong: " + err);
-        res.end();
-      }
-      else {
-        Project.update({_id: req.body.project}, {$push: {events: obj._id}}, function(err, project) {
-          if (err) {
+        new_event.save(function(err, obj) {
+          if(err) {
             console.log("Something went wrong: " + err);
             res.status(500).send("Something went wrong: " + err);
             res.end();
           }
           else {
-            console.log("An event was created: ");
-            console.log(JSON.stringify(obj));
-            res.json(obj);
+            Project.update({_id: req.body.project}, {$push: {events: obj._id}}, function(err, project) {
+              if (err) {
+                console.log("Something went wrong: " + err);
+                res.status(500).send("Something went wrong: " + err);
+                res.end();
+              }
+              else {
+                console.log("An event was created: ");
+                console.log(JSON.stringify(obj));
+                res.json(obj);
+              }
+            });
           }
         });
       }
