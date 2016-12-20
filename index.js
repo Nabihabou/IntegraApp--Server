@@ -8,6 +8,7 @@ var mongoose        = require('mongoose');
 var jwt             = require('jsonwebtoken');
 var expressJwt      = require('express-jwt');
 var request         = require('request');
+var cors            = require('cors');
 
 // Server files
 var config          = require('./config');
