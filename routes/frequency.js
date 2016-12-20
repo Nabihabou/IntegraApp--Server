@@ -59,7 +59,31 @@ module.exports = {
     });
   },
   put: function(req, res) {
-
+    var profileId = jwt.decode(req.token, config.secret)._id;
+    Profile.findOne({_id: profileId}, function(error, object) {
+      if(object && (object.is_admin || has_level(object.members, profileId))) {
+        Frequency.findOne({_id: req.body.frequencyId}, function(error, freq) {
+          if(freq) {
+            var is_present = false;
+            for(var i = 0;i < freq.presents.length;i++) {
+              if (freq.presents[i].member == req.body.memberId && 0 <= req.body.hours <= freq.duration) {
+                freq.presents[i].hours = req.body.hours;
+                is_present = true;
+              }
+            }
+            if (!is_present) {
+              freq.presents.push({member: req.body.memberId, hours: req.body.hours});
+            }
+            freq.save(function(err) {
+              if (err) {
+                console.log(err);
+              }
+            })
+            res.json({msg: "Success!"});
+          }
+        })
+      }
+    });
   }
 
 }

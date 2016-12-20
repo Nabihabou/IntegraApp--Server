@@ -85,7 +85,7 @@ app.get('/api/frequency', routes.frequency.get);
 app.post('/api/frequency/many', routes.frequency.many);
 app.post('/api/frequency', routes.frequency.post);
 // send json on members and hours to modify/add
-// app.put('/api/frequency', routes.frequency.put);
+app.put('/api/frequency', routes.frequency.put);
 
 
 
