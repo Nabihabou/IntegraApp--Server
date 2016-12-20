@@ -41,10 +41,9 @@ module.exports = {
     var profileId = jwt.decode(req.token, config.secret)._id;
     Profile.findOne({_id: profileId}, function(error, object) {
       if(object && object.is_admin) {
-        // User is authorized to create accounts
         if (req.body.google_email) {
           Profile.findOne({google_email: req.body.google_email}, function(error, obj) {
-            if(obj && obj.length == 0) {
+            if(!obj) {
               var newUser = new Profile(req.body);
               newUser.save(function(err, obj) {
                 if(err) {
@@ -58,7 +57,7 @@ module.exports = {
                   res.json(obj);
                 }
               });
-            } else if(obj) {
+            } else {
               res.json(obj);
             }
           })
