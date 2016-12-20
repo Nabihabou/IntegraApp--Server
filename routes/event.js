@@ -58,6 +58,11 @@ module.exports = {
   count: function(req, res) {
     Event.count({}, helpers.client.count(req, res, "Event"));
   },
+  many: function(req, res) {
+    if(req.body.ids) {
+      Event.find({_id: {$in: req.body.ids}}, helpers.client.findAll(req, res, "Event"));
+    }
+  }
   delete: function(req ,res) {
     // TODO => retirar evento de projed
     Event.findOne({$or: [{_id: req.body.id}, {title: req.body.title}]}, function(err, event) {

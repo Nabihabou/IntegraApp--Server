@@ -21,6 +21,11 @@ module.exports = {
   get: function(req, res) {
     Frequency.find({project: mongoose.Types.ObjectId(req.query.projectId)}, helpers.client.findAll(req, res, "Frequency"));
   },
+  many: function(req, res) {
+    if(req.body.ids) {
+      Frequency.find({_id: {$in: req.body.ids}}, helpers.client.findAll(req, res, "Frequency"));
+    }
+  },
   post: function(req, res) {
     var profileId = jwt.decode(req.token, config.secret)._id;
     Profile.findOne({_id: profileId}, function(error, object) {
@@ -54,7 +59,7 @@ module.exports = {
     });
   },
   put: function(req, res) {
-    
+
   }
 
 }
