@@ -22,7 +22,7 @@ var app     = module.exports = express();
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(middlewares.cos_configs);
+// app.use(middlewares.cos_configs);
 app.use(function(req, res, next) {
   if(req.headers.authorization) {
     req.token = req.headers.authorization.split(' ')[1];
