@@ -11,7 +11,7 @@ module.exports = {
     if (!req.query.id && !req.query.email && !req.query.name && !req.query.google_id) {
       Profile.find({}, helpers.client.findAll(req, res, "Profile"));
     } else if(req.query.id){
-      Profile.findOne({_id: req.query.id}, helpers.client.findOne(req, res, "Profile"));
+      Profile.findOne({_id: mongoose.Types.ObjectId(req.query.id)}, helpers.client.findOne(req, res, "Profile"));
     } else if(req.query.email) {
       var findEmai = RegExp()
       Profile.find({google_email: {$regex: /req.query.email/, $options: 'i'}}, helpers.client.findAll(req, res, "Profile"));
@@ -19,6 +19,11 @@ module.exports = {
       Profile.findOne({google_name: req.query.name}, helpers.client.findOne(req, res, "Profile"));
     } else if(req.query.google_id) {
       Profile.findOne({google_id: req.query.google_id}, helpers.client.findOne(req, res, "Profile"));
+    }
+  },
+  getMany: function(req, res) {
+    if(req.body.ids) {
+      Profile.find({_id: {$in: req.body.ids}}, helpers.client.findAll(req, res, "Profile"));
     }
   },
   myProfile: function(req, res) {

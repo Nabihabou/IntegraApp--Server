@@ -58,6 +58,7 @@ app.get('/api/profile', routes.profile.get);
 app.get('/api/profile/count', routes.profile.count);
 app.get('/api/profile/my', routes.profile.myProfile);
 // pre-cadastrar usuario
+app.post('/api/profile/many', routes.profile.getMany);
 app.post('/api/profile', routes.profile.post);
 
 
