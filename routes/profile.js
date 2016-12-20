@@ -44,19 +44,25 @@ module.exports = {
       if(object && object.is_admin) {
         // User is authorized to create accounts
         if (req.body.google_email) {
-          var newUser = new Profile(req.body);
-          newUser.save(function(err, obj) {
-            if(err) {
-              console.log(err);
-              res.status(500).send("Something went wrong saving the new user!");
-              res.end();
-            }
-            else {
-              console.log("An user was created: ");
-              console.log(JSON.stringify(obj));
+          Profile.findOne({google_email: req.body.google_email}, function(error, obj) {
+            if(obj && obj.length == 0) {
+              var newUser = new Profile(req.body);
+              newUser.save(function(err, obj) {
+                if(err) {
+                  console.log(err);
+                  res.status(500).send("Something went wrong saving the new user!");
+                  res.end();
+                }
+                else {
+                  console.log("An user was created: ");
+                  console.log(JSON.stringify(obj));
+                  res.json(obj);
+                }
+              });
+            } else if(obj) {
               res.json(obj);
             }
-          });
+          })
         } else if(req.body.emails) {
           var errors = 0;
           for(email in req.body.emails) {
