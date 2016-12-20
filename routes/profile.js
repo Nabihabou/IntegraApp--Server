@@ -8,13 +8,12 @@ var helpers = require('../helpers');
 var Profile = mongoose.model('Profile');
 module.exports = {
   get: function(req, res) {
-    if (!req.query.id && !req.query.email && !req.query.name && !req.query.google_id) {
+    if (!req.query.id && !req.query.google_email && !req.query.name && !req.query.google_id) {
       Profile.find({}, helpers.client.findAll(req, res, "Profile"));
     } else if(req.query.id){
       Profile.findOne({_id: mongoose.Types.ObjectId(req.query.id)}, helpers.client.findOne(req, res, "Profile"));
-    } else if(req.query.email) {
-      var findEmai = RegExp()
-      Profile.find({google_email: {$regex: /req.query.email/, $options: 'i'}}, helpers.client.findAll(req, res, "Profile"));
+    } else if(req.query.google_email) {
+      Profile.find({google_email: req.query.google_email}, helpers.client.findAll(req, res, "Profile"));
     } else if(req.query.name) {
       Profile.findOne({google_name: req.query.name}, helpers.client.findOne(req, res, "Profile"));
     } else if(req.query.google_id) {
