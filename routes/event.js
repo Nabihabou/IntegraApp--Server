@@ -6,7 +6,7 @@ var helpers = require('../helpers');
 
 
 var Event = mongoose.model('Event');
-var Profile = mooongose.model('Profile');
+var Profile = mongoose.model('Profile');
 var Project = mongoose.model('Project');
 
 module.exports = {
