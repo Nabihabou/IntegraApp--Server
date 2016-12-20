@@ -13,7 +13,7 @@ module.exports = {
     } else if(req.query.id){
       Profile.findOne({_id: mongoose.Types.ObjectId(req.query.id)}, helpers.client.findOne(req, res, "Profile"));
     } else if(req.query.google_email) {
-      Profile.find({google_email: req.query.google_email}, helpers.client.findAll(req, res, "Profile"));
+      Profile.findOne({google_email: req.query.google_email}, helpers.client.findAll(req, res, "Profile"));
     } else if(req.query.name) {
       Profile.findOne({google_name: req.query.name}, helpers.client.findOne(req, res, "Profile"));
     } else if(req.query.google_id) {
