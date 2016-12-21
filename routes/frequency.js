@@ -19,7 +19,12 @@ var has_level = function(memberArray, id) {
 
 module.exports = {
   get: function(req, res) {
-    Frequency.find({project: mongoose.Types.ObjectId(req.query.projectId)}, helpers.client.findAll(req, res, "Frequency"));
+    if(req.query.id) {
+      Frequency.findOne({_id:mongoose.Types.ObjectId(req.query.id)}, helpers.client.findOne(req, res, "Frequency"));
+    }
+    else if(req.query.projectId){
+      Frequency.find({project: mongoose.Types.ObjectId(req.query.projectId)}, helpers.client.findAll(req, res, "Frequency"));
+    }
   },
   many: function(req, res) {
     if(req.body.ids) {
