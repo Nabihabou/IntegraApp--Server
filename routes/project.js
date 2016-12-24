@@ -79,9 +79,9 @@ module.exports = {
       }
     });
   },
-  // id for the project, userId for user id
+  // project for the projectId, userId for user id
   postMember: function(req, res) {
-    if(req.body.id && req.body.profile && req.body.operation) {
+    if(req.body.project && req.body.profile && req.body.operation) {
       var profileId = jwt.decode(req.token, config.secret)._id;
       Profile.findOne({_id: profileId}, function(error, profile) {
         if (error) {
