@@ -50,9 +50,15 @@ module.exports = {
               if (object) {
                 console.log("A frequency was created: ");
                 console.log(JSON.stringify(obj));
-                res.json(object);
+
               }
             });
+            var profileId = jwt.decode(req.token, config.secret)._id;
+            Profile.update({_id: profileId}, {$push: {frequencies: obj._id}}, function(err, profile) {
+              console.log("Frequency appended to profile");
+              console.log(JSON.stringify(profile));
+            });
+            res.json(object);
 
           } else {
             console.log("Something went wrong: " + err);
@@ -77,6 +83,10 @@ module.exports = {
               }
             }
             if (!is_present) {
+              Profile.update({_id: req.body.memberId}, {$push: {frequencies: obj._id}}, function(err, profile) {
+                console.log("Frequency appended to profile");
+                console.log(JSON.stringify(profile));
+              });
               freq.presents.push({member: req.body.memberId, hours: req.body.hours});
             }
             freq.save(function(err) {

@@ -87,5 +87,27 @@ module.exports = {
   },
   count: function(req, res) {
     Profile.count({}, helpers.client.count(req, res, "Profile"));
+  },
+  hours: function(req, res) {
+    var profileId = jwt.decode(req.token, config.secret)._id;
+    Profile.findOne({_id: profileId}, function(error, obj) {
+      if (obj) {
+        var hours = 0;
+        Frequencies.find({_id: {$in: obj.frequencies}}, function(err, frequencies) {
+          for(var j = 0;j < frequencies.length;j++) {
+            for(var k = 0;k < frequencies[j].presents.length;k++) {
+              if (obj._id == frequencies[i].presents[j].member) {
+                hours += frequencies[i].presents[j].hours;
+              }
+            }
+          }
+        });
+        res.json({hours: hours});
+      } else if(error) {
+        console.log(error);
+        res.send(error);
+        res.end();
+      }
+    });
   }
 }

@@ -26,7 +26,8 @@ var profileSchema = new Schema({
   address: {type: String, default: ""},
   city: {type: String, default: ""},
   birthday: {type: Date, default: Date.now},
-  projects: {type: [Schema.Types.ObjectId], default: []}
+  projects: {type: [Schema.Types.ObjectId], default: []},
+  frequencies: {type: [Schema.Types.ObjectId], default: []}
 })
 
 module.exports = mongoose.model('Profile', profileSchema)
