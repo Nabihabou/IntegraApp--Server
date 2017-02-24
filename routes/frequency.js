@@ -83,7 +83,7 @@ module.exports = {
               }
             }
             if (!is_present) {
-              Profile.update({_id: req.body.memberId}, {$push: {frequencies: obj._id}}, function(err, profile) {
+              Profile.update({_id: req.body.memberId}, {$push: {frequencies: freq._id}}, function(err, profile) {
                 console.log("Frequency appended to profile");
                 console.log(JSON.stringify(profile));
               });
