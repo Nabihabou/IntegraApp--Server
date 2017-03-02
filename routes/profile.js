@@ -108,6 +108,6 @@ module.exports = {
         res.send(error);
         res.end();
       }
-    }).bind(models);
+    }).bind(Frequency);
   }
 }
