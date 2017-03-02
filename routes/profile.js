@@ -6,6 +6,8 @@ var jwt = require('jsonwebtoken');
 var helpers = require('../helpers');
 
 var Profile = mongoose.model('Profile');
+var Frequency = mongoose.model('Frequency');
+
 module.exports = {
   get: function(req, res) {
     if (!req.query.id && !req.query.google_email && !req.query.name && !req.query.google_id) {
@@ -92,22 +94,23 @@ module.exports = {
     var profileId = jwt.decode(req.token, config.secret)._id;
     Profile.findOne({_id: profileId}, function(error, obj) {
       if (obj) {
-        var hours = 0;
         Frequency.find({_id: {$in: obj.frequencies}}, function(err, frequencies) {
+          var hours = 0;
           for(var j = 0;j < frequencies.length;j++) {
             for(var k = 0;k < frequencies[j].presents.length;k++) {
               if (obj._id == frequencies[i].presents[j].member) {
                 hours += frequencies[i].presents[j].hours;
               }
             }
+            res.json({hours: hours});
           }
         });
-        res.json({hours: hours});
+
       } else if(error) {
         console.log(error);
         res.send(error);
         res.end();
       }
-    }).bind(Frequency);
+    });
   }
 }
