@@ -93,7 +93,7 @@ module.exports = {
     Profile.findOne({_id: profileId}, function(error, obj) {
       if (obj) {
         var hours = 0;
-        Frequencies.find({_id: {$in: obj.frequencies}}, function(err, frequencies) {
+        Frequency.find({_id: {$in: obj.frequencies}}, function(err, frequencies) {
           for(var j = 0;j < frequencies.length;j++) {
             for(var k = 0;k < frequencies[j].presents.length;k++) {
               if (obj._id == frequencies[i].presents[j].member) {
