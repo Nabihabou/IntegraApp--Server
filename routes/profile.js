@@ -98,8 +98,8 @@ module.exports = {
           var hours = 0;
           for(var j = 0;j < frequencies.length;j++) {
             for(var k = 0;k < frequencies[j].presents.length;k++) {
-              if (obj._id == frequencies[i].presents[j].member) {
-                hours += frequencies[i].presents[j].hours;
+              if (obj._id == frequencies[j].presents[k].member) {
+                hours += frequencies[i].presents[k].hours;
               }
             }
             res.json({hours: hours});
