@@ -98,8 +98,10 @@ module.exports = {
           var hours = 0;
           for(var j = 0;j < frequencies.length;j++) {
             for(var k = 0;k < frequencies[j].presents.length;k++) {
+              console.log(obj._id, frequencies[j].presents[k].member);
               if (mongoose.Types.ObjectId(obj._id) == mongoose.Types.ObjectId(frequencies[j].presents[k].member)) {
                 hours += frequencies[i].presents[k].hours;
+                console.log("in");
               }
             }
             res.json({hours: hours});
