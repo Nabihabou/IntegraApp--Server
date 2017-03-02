@@ -99,8 +99,7 @@ module.exports = {
           for(var j = 0;j < frequencies.length;j++) {
             for(var k = 0;k < frequencies[j].presents.length;k++) {
               if (obj._id.equals(frequencies[j].presents[k].member)) {
-                hours += frequencies[i].presents[k].hours;
-                console.log("in");
+                hours += frequencies[j].presents[k].hours;
               }
             }
             res.json({hours: hours});
