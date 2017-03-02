@@ -99,7 +99,11 @@ module.exports = {
           for(var j = 0;j < frequencies.length;j++) {
             for(var k = 0;k < frequencies[j].presents.length;k++) {
               if (obj._id == frequencies[j].presents[k].member) {
+                console.log("Bateu e " + obj._id + " " + frequencies[j].presents[k].member);
                 hours += frequencies[i].presents[k].hours;
+              }
+              else {
+                console.log("Num Bateu e " + obj._id + " " + frequencies[j].presents[k].member);
               }
             }
             res.json({hours: hours});
