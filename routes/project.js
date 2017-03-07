@@ -6,6 +6,7 @@ var config = require('../config');
 
 var Profile = mongoose.model('Profile');
 var Project = mongoose.model('Project');
+var Frequency = mongoose.model('Frequency');
 
 var has_level = function(memberArray, desired_level, id) {
   for(var i = 0;i < memberArray.length;i++) {
@@ -152,6 +153,24 @@ module.exports = {
     Project.count({}, helpers.client.count(req, res, "Project"))
   },
   report: function(req, res) {
-    res.json({ok: "ok", id: req.query.id});
+    if (req.query.id) {
+      Project.findOne({_id: req.query.id}, function(error, project) {
+        var hours = {};
+        var members_name = {};
+        Profile.find({_id: {$in: project.members}}, function(err, project_members) {
+          for(var i  = 0;i < project_members.length;i++) {
+            members_name[project_members[i]._id] = project_members[i].google_name;
+          }
+          Frequency.find({_id: {$in: project.frequencies}}, function(err, frequencies) {
+            for(var j = 0;j < frequencies.length;j++) {
+              for(var k = 0;k < frequencies[j].presents.length;k++) {
+                hours[members_name[frequencies[j].presents[k].member]] += frequencies[j].presents[k].hours;
+              }
+            }
+            res.json({hours: hours});
+          });
+        });
+      });
+    }
   }
 }
