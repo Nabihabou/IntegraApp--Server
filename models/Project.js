@@ -10,7 +10,8 @@ if (!mongoose.connection.readyState == 0) {
 var projectSchema = new Schema({
   name: {type: String, required: true, unique: true},
   description: {type: String, required: true},
-  logo: {type: String, required: true},
+  logo: {type: String, required: false},
+  emai: {type: String, required: true},
   members: {type: [{_id: Schema.Types.ObjectId, level: Number}], default: []},
   frequencies: {type: [Schema.Types.ObjectId], default: []},
   requests: {type: [Schema.Types.ObjectId], default: []},

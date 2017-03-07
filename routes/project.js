@@ -61,7 +61,8 @@ module.exports = {
         var new_project = new Project({
           name: req.body.name,
           description: req.body.description,
-          logo: req.body.logo
+          logo: req.body.logo,
+          email: req.body.email
         });
 
         new_project.save(function(err, obj) {
@@ -149,5 +150,8 @@ module.exports = {
   },
   count: function(req, res) {
     Project.count({}, helpers.client.count(req, res, "Project"))
+  },
+  report: function(req, res) {
+    res.json({ok: "ok", id: req.query.id});
   }
 }

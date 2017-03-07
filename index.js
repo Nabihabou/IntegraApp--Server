@@ -72,6 +72,7 @@ app.delete('/api/project', routes.project.delete);
 // requires profile, project and operation on body
 app.put('/api/project/member', routes.project.postMember);
 app.post('/api/project', routes.project.post);
+app.get('/api/project/report', routes.project.report);
 
 
 // Event
