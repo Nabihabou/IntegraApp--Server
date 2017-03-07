@@ -167,7 +167,7 @@ module.exports = {
                 if(hours[members_name[frequencies[j].presents[k].member]]) {
                   hours[members_name[frequencies[j].presents[k].member]] += frequencies[j].presents[k].hours;
                 } else {
-                  hours[members_name[frequencies[j].presents[k].member]] = 0;
+                  hours[members_name[frequencies[j].presents[k].member]] = frequencies[j].presents[k].hours;
                 }
 
               }
