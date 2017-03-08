@@ -151,7 +151,7 @@ module.exports = {
     Project.count({}, helpers.client.count(req, res, "Project"))
   },
   report: function(req, res) {
-    if (req.query.id) {
+    if (req.query.id && req.query.date) {
       Project.findOne({_id: req.query.id}, function(error, project) {
         var hours = {};
         var members_name = {};
@@ -160,14 +160,23 @@ module.exports = {
             members_name[project_members[i]._id] = project_members[i].google_name;
           }
           Frequency.find({_id: {$in: project.frequencies}}, function(err, frequencies) {
-            for(var j = 0;j < frequencies.length;j++) {
-              for(var k = 0;k < frequencies[j].presents.length;k++) {
-                if(hours[members_name[frequencies[j].presents[k].member]]) {
-                  hours[members_name[frequencies[j].presents[k].member]] += frequencies[j].presents[k].hours;
+            var year = parseInt(req.query.date.substring(0, 4));
+            var semester = parseInt(req.query.date[req.query.date.length - 1]);
+            var now = new Date();
+            var semester_frequencies = frequencies.filter(function(freq) {
+              if(semester == 1) {
+                return (freq.date.getFullYear() == year && freq.date.getMonth() < 5)
+              } else if(semester == 2) {
+                return (freq.date.getFullYear() == year && freq.date.getMonth() >= 5)
+              }
+            });
+            for(var j = 0;j < semester_frequencies.length;j++) {
+              for(var k = 0;k < semester_frequencies[j].presents.length;k++) {
+                if(hours[members_name[semester_frequencies[j].presents[k].member]]) {
+                  hours[members_name[semester_frequencies[j].presents[k].member]] += semester_frequencies[j].presents[k].hours;
                 } else {
-                  hours[members_name[frequencies[j].presents[k].member]] = frequencies[j].presents[k].hours;
+                  hours[members_name[semester_frequencies[j].presents[k].member]] = semester_frequencies[j].presents[k].hours;
                 }
-
               }
             }
             res.json({hours: hours});
