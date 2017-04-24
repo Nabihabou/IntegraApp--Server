@@ -24,6 +24,9 @@ module.exports = {
   },
   getMany: function(req, res) {
     if(req.body.ids) {
+      req.body.ids = req.body.ids.map(function(id) {
+        return mongoose.Types.ObjectId(id);
+      })
       Profile.find({_id: {$in: req.body.ids}}, helpers.client.findAll(req, res, "Profile"));
     }
   },
