@@ -42,9 +42,8 @@ module.exports = function(req, res) {
                   console.log("Pre-registered user logged in!");
                   var token = jwt.sign({_id: obj._id}, config.secret, {expiresIn: "48h"});
                   obj.google_id = googleRequestResponse.sub;
-                  console.log(JSON.stringify(googleRequestResponse));
-                  obj.google_name = req.query.google_name;
-                  obj.google_picture = req.query.google_picture;
+                  obj.google_name = googleRequestResponse.name;
+                  obj.google_picture = googleRequestResponse.picture;
                   obj.save(function(err, updatedObj) {
                     if(err) {
                       console.log(err);
