@@ -27,6 +27,9 @@ module.exports = {
       Profile.find({_id: {$in: req.body.ids}}, helpers.client.findAll(req, res, "Profile"));
     }
   },
+  getAll: function(req, res) {
+    Profile.find({}, helpers.client.findAll(req, res, "Profile"));
+  },
   myProfile: function(req, res) {
     var profileId = jwt.decode(req.token, config.secret)._id;
     Profile.findOne({_id: profileId}, function(error, obj) {
