@@ -19,9 +19,13 @@ var has_level = function(memberArray, desired_level, id) {
 
 module.exports = {
   get: function(req, res) {
-    if (!req.query.id) {
+    if (!req.query.id && !req.query.name) {
       Project.find({}, helpers.client.findAll(req, res, "Project"));
-    } else {
+    }
+    else if (!req.query.id) {
+      Project.findOne({name: req.query.name}, helpers.client.findOne(req, res, "Project"));
+    }
+    else {
       Project.findOne({_id: req.query.id}, helpers.client.findOne(req, res, "Project"));
     }
   },
