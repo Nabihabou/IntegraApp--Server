@@ -68,6 +68,10 @@ app.post('/api/profile', routes.profile.post);
 // Project
 app.get('/api/project', routes.project.get);
 app.get('/api/project/count', routes.project.count);
+
+app.get('/project', routes.project.get);
+app.get('/project/count', routes.project.count);
+
 app.get('/api/project/my', routes.project.myProjects);
 app.delete('/api/project', routes.project.delete);
 // requires profile, project and operation on body
@@ -96,7 +100,7 @@ app.put('/api/frequency', routes.frequency.put);
 // app.post('/api/request', routes.request.post);
 
 
-
+app.use(express.static('static'));
 
 app.post('/mirror', function(req, res) {
   console.log(req.body);

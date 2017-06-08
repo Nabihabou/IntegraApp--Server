@@ -9,6 +9,9 @@ if (!mongoose.connection.readyState == 0) {
 // members have different access levels
 var projectSchema = new Schema({
   name: {type: String, required: true, unique: true},
+  founders: {type: [String], default: []},
+  current_community: {type: String, default: ""},
+  past_communities: {type: [String], default: []},
   description: {type: String, required: true},
   logo: {type: String, required: false},
   email: {type: String, required: false},
