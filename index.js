@@ -31,7 +31,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use('/api', expressJwt({secret: config.secret}));
+app.use('/api', expressJwt({secret: config.secret, algorithms: 'RS256'}, ));
 
 mongoose.Promise = require('bluebird');
 mongoose.connect(config.database);
