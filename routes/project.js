@@ -65,7 +65,8 @@ module.exports = {
       if(object && object.is_admin) {
         var new_project = new Project({
           name: req.body.name,
-          description: req.body.description
+          description: req.body.description,
+          logo: req.body.logo
         });
 
         new_project.save(function(err, obj) {
