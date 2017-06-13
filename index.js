@@ -57,7 +57,7 @@ app.post('/mirror', function(req ,res) {
   res.json(req.body);
 });
 
-app.post('/profile', upload.single('file'), function (req, res, next) {
+app.post('/upload', upload.single('file'), function (req, res, next) {
   // req.file is the `avatar` file
   // req.body will hold the text fields, if there were any
   console.log(req.file);
