@@ -9,6 +9,8 @@ var jwt             = require('jsonwebtoken');
 var expressJwt      = require('express-jwt');
 var request         = require('request');
 var cors            = require('cors');
+var multer          = require('multer');
+var upload          = multer({dest: 'uploads/'});
 
 // Server files
 var config          = require('./config');
@@ -54,6 +56,14 @@ app.get('/test', function(req, res) {
 app.post('/mirror', function(req ,res) {
   res.json(req.body);
 });
+
+app.post('/profile', upload.single('file'), function (req, res, next) {
+  // req.file is the `avatar` file
+  // req.body will hold the text fields, if there were any
+  console.log(req.file);
+  console.log(req.body);
+  res.json({'message': 'ok'});
+})
 
 // User
 app.get('/api/profile', routes.profile.get);
