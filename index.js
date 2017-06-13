@@ -25,7 +25,6 @@ var app     = module.exports = express();
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser({uploadDir: './tmp/uploads', keepExtensions: true}));
 app.use(cors());
 app.use(function(req, res, next) {
   if(req.headers.authorization) {
@@ -34,6 +33,7 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use(express.static('uploads'));
 app.use('/api', expressJwt({secret: config.secret}, {algorithms: 'RSA256'}));
 
 mongoose.Promise = require('bluebird');
