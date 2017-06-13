@@ -62,7 +62,7 @@ app.post('/upload', upload.single('file'), function (req, res, next) {
   // req.body will hold the text fields, if there were any
   console.log(req.file);
   console.log(req.body);
-  res.json({'message': 'ok'});
+  res.json({filename: req.file.filename});
 })
 
 // User
