@@ -74,6 +74,7 @@ app.get('/api/profile/all', routes.profile.getAll);
 // pre-cadastrar usuario
 app.post('/api/profile/many', routes.profile.getMany);
 app.post('/api/profile', routes.profile.post);
+app.post('/api/profile/edit', routes.profile.edit);
 
 
 // Project
@@ -104,7 +105,6 @@ app.post('/api/frequency/many', routes.frequency.many);
 app.post('/api/frequency', routes.frequency.post);
 // send json on members and hours to modify/add
 app.put('/api/frequency', routes.frequency.put);
-
 
 
 // app.get('/api/request', routes.request.get);
