@@ -74,7 +74,7 @@ app.get('/api/profile/all', routes.profile.getAll);
 // pre-cadastrar usuario
 app.post('/api/profile/many', routes.profile.getMany);
 app.post('/api/profile', routes.profile.post);
-app.post('/api/profile/edit', routes.profile.edit);
+app.put('/api/profile/edit', routes.profile.edit);
 
 
 // Project
