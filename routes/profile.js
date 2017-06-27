@@ -22,7 +22,7 @@ module.exports = {
       Profile.findOne({google_id: req.query.google_id}, helpers.client.findOne(req, res, "Profile"));
     }
   },
-  edit: function() {
+  edit: function(req, res) {
     var profileId = jwt.decode(req.token, config.secret)._id;
 
     Profile.update({_id: profileId}, {$set: {course: req.body.course, shirt_size: req.body.shirt_size,
