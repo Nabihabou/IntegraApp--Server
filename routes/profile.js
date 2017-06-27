@@ -29,7 +29,7 @@ module.exports = {
                                              begin_course: req.body.begin_course, end_course: req.body.end_course,
                                              gender: req.body.gender, telephone: req.body.telephone,
                                              cellphone: req.body.cellphone, cpf: req.body.cpf,
-                                             rg: req.body.rg, cep: req.body.cep, address: req.body.address
+                                             rg: req.body.rg, cep: req.body.cep, address: req.body.address,
                                              city: req.body.city, birthday: req.body.birthday}}, function(err, profile) {
       if (err) {
         console.log("Something went wrong: " + err);
