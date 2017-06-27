@@ -25,8 +25,6 @@ module.exports = {
   edit: function() {
     var profileId = jwt.decode(req.token, config.secret)._id;
 
-    course,shirt_size,begin_course,end_course,gender,telephone,cellphone,cpf,rg,cep,address,city,birthday
-
     Profile.update({_id: profileId}, {$set: {course: req.body.course, shirt_size: req.body.shirt_size,
                                              begin_course: req.body.begin_course, end_course: req.body.end_course,
                                              gender: req.body.gender, telephone: req.body.telephone,
