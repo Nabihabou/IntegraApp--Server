@@ -98,7 +98,7 @@ module.exports = {
             } else if(obj) {
               if (has_level(obj.members, req.body.level, profileId) || profile.is_admin) {
                 if (req.body.operation == "change_level") {
-                  Project.update({_id: req.body.project}, {$pop: {members: {_id: mongoose.Types.ObjectId(req.body.profile), level: old_level}}}, function(err, project) {
+                  Project.update({_id: req.body.project}, {$pop: {members: {_id: mongoose.Types.ObjectId(req.body.profile), level: req.body.old_level}}}, function(err, project) {
                     if (err) {
                       console.log("Something went wrong: " + err);
                       res.status(500).send("Something went wrong: " + err);
