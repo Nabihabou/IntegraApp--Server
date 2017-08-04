@@ -98,7 +98,36 @@ module.exports = {
             } else if(obj) {
               if (has_level(obj.members, req.body.level, profileId) || profile.is_admin) {
                 if (req.body.operation == "change_level") {
-                  res.json({"olar": true});
+                  Project.update({_id: req.body.project}, {$pop: {members: {_id: mongoose.Types.ObjectId(req.body.profile), level: old_level}}}, function(err, project) {
+                    if (err) {
+                      console.log("Something went wrong: " + err);
+                      res.status(500).send("Something went wrong: " + err);
+                      res.end();
+                    } else {
+                      Profile.update({_id: req.body.profile}, {$pop: {projects: req.body.project}}, function(error, obj) {
+                        if (error) {
+                          console.log(error);
+                        } else {
+                          Project.update({_id: req.body.project}, {$addToSet: {members: {_id: mongoose.Types.ObjectId(req.body.profile), level: req.body.level}}}, function(err, project) {
+                            if (err) {
+                              console.log("Something went wrong: " + err);
+                              res.status(500).send("Something went wrong: " + err);
+                              res.end();
+                            } else {
+                              Profile.update({_id: req.body.profile}, {$addToSet: {projects: mongoose.Types.ObjectId(req.body.project)}}, function(error, result) {
+                                if (error) {
+                                  console.log(error);
+                                } else {
+                                  console.log(result);
+                                }
+                              });
+                              res.json(project);
+                            }
+                          });
+                        }
+                      });
+                    }
+                  });
                 }
                 else if (req.body.operation == "remove") {
                   Project.update({_id: req.body.project}, {$pop: {members: {_id: mongoose.Types.ObjectId(req.body.profile), level: 0}}}, function(err, project) {
