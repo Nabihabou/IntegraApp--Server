@@ -22,7 +22,7 @@ var profileSchema = new Schema({
   cellphone: {type: Number, default: null},
   cpf: {type: Number, default: null},
   rg: {type: Number, default: null},
-  cep: {type: String, default: null},
+  cep: {type: Number, default: null},
   address: {type: String, default: null},
   city: {type: String, default: null},
   birthday: {type: Date, default: Date.now},
