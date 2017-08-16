@@ -27,8 +27,8 @@ module.exports = {
           author: obj._id,
           place: req.body.place,
           project: mongoose.Types.ObjectId(req.body.project),
-          startTime: new Date(req.body.startTime),
-          endTime: new Date(req.body.endTime)
+          startsAt: new Date(req.body.startsAt),
+          endsAt: new Date(req.body.endsAt)
         });
 
         new_event.save(function(err, obj) {
