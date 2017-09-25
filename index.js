@@ -19,7 +19,7 @@ var routes          = require('./routes')
 var models          = require('./models');
 
 // create main variables
-var port    = process.env.PORT || 8080;
+var port    =  8000;
 var app     = module.exports = express();
 
 app.use(morgan('dev'));
@@ -34,7 +34,7 @@ app.use(function(req, res, next) {
 });
 
 app.use(express.static('uploads'));
-app.use('/api', expressJwt({secret: config.secret}, {algorithms: 'RSA256'}));
+// app.use('/api', expressJwt({secret: config.secret}, {algorithms: 'RSA256'}));
 
 mongoose.Promise = require('bluebird');
 mongoose.connect(config.database);
@@ -110,6 +110,9 @@ app.put('/api/frequency', routes.frequency.put);
 // app.get('/api/request', routes.request.get);
 // app.post('/api/request', routes.request.post);
 
+/// memo and oficies routes
+app.get('/api/memo', routes.Memo.get);
+app.post('/api/memo/create', routes.Memo.post);
 
 app.use(express.static('static'));
 
