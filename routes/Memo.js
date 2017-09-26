@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var models = require('../models');
 var jwt = require('jsonwebtoken');
+var crypto = require('crypto');
 var config = require('../config');
 var helpers = require('../helpers');
 
@@ -24,9 +25,11 @@ module.exports = {
                     description: req.body.description,
                     assunt: req.body.assunt,
                     methods: req.body.methods,
-                    reasons: req.body.reasons
+                    reasons: req.body.reasons,
+                    valid: false,
+                    url:  crypto.createHash('md5').digest('hex')
                 });
-            
+
                 new_memo.save(function(err, obj){
                     if(err) {
                         console.log("Error in save in database "  + err);
@@ -35,11 +38,33 @@ module.exports = {
                     }
                     else {
                         console.log("A memorando was created: ");
-                        console.log(JSON.stringify(obj));
+                        //// Helper to send email, (auth, data, sender_to)
+
+                        console.log(obj._id);
+                        helpers.server.sendmail({
+                            user: 'tecnologia@niejcesupa.org',
+                            pass: 'tecnologianiej'
+                        },obj,'<email_rementente_aqui>');
                         res.json(obj);
                     }
                 });
             }
         });
-    }
+},
+confirmation: function(req, res){
+    var urlValid = req.query.memo;
+    Memo.findOne({url: urlValid}, function(err, profile){
+        if(profile) {
+            Memo.update({url: urlValid},{url: '', valid: true}, function(err, profile){
+                if(err){
+                    console.log("Error in " + err );
+                    res.json(err);
+                }
+                res.json("Memorando confirmado");
+            });
+        }else {
+            res.json("URL INVALIDA!");
+        }
+    });
+   }
 }

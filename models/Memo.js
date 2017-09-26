@@ -13,7 +13,8 @@ var memoSchema = new Schema({
   assunt: {type: String, required: true},
   methods: {type: String, required: true},
   reasons: {type: String, required: true},
-  valid: {Type: Boolean, default: false}
+  valid: {type: Boolean, default: false},
+  url: {type: String, required: false},
 });
 
 module.exports = mongoose.model('Memo', memoSchema)

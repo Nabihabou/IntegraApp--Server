@@ -27,6 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 app.use(function(req, res, next) {
+  // console.log(req);
   if(req.headers.authorization) {
     req.token = req.headers.authorization.split(' ')[1];
   }
@@ -110,9 +111,10 @@ app.put('/api/frequency', routes.frequency.put);
 // app.get('/api/request', routes.request.get);
 // app.post('/api/request', routes.request.post);
 
-/// memo and oficies routes
+/// memorando and oficies routes
 app.get('/api/memo', routes.Memo.get);
 app.post('/api/memo/create', routes.Memo.post);
+app.get('/api/memo/confirmation/', routes.Memo.confirmation);
 
 app.use(express.static('static'));
 
