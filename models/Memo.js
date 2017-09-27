@@ -7,7 +7,7 @@ if (!mongoose.connection.readyState == 0) {
 }
 
 var memoSchema = new Schema({
-  author: {type: Schema.Types.ObjectId, required: true},
+  author: {type: String, required: true},
   to: {type: String, required: true},
   description: {type: String, required: true},
   assunt: {type: String, required: true},
