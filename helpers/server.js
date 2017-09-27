@@ -20,7 +20,6 @@ module.exports = {
 			if (error) {
 				console.log(error);
 			}
-			console.log(info);
 			console.log("Message sent: %s ", info );
 		});
 	},

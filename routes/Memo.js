@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var models = require('../models');
 var jwt = require('jsonwebtoken');
 var crypto = require('crypto');
+var randomstring = require("randomstring");
 var config = require('../config');
 var helpers = require('../helpers');
 
@@ -16,9 +17,18 @@ module.exports = {
     },
     post: function(req, res) {
         var profileId = jwt.decode(req.token, config.secret)._id;
+        var number = null;
+        Memo.count({}, function(err, count){
+            if(!err) {
+                number = count + 1; /// the number of memorando
+            }
+        });
         Profile.findOne({_id: profileId}, function(error, obj){
             console.log(req.body);
             if(obj) {
+                /// random string to update url hash
+                var entropy = randomstring.generate(parseInt(Math.random()) * 100);
+                var entropy_time = (new Date()).valueOf().toString();
                 var new_memo = new Memo({
                     author: obj._id,
                     to: req.body.to,
@@ -27,7 +37,8 @@ module.exports = {
                     methods: req.body.methods,
                     reasons: req.body.reasons,
                     valid: false,
-                    url:  crypto.createHash('md5').digest('hex')
+                    number: number,
+                    url:  crypto.createHash('sha1').update(entropy + entropy_time).digest('hex')
                 });
 
                 new_memo.save(function(err, obj){

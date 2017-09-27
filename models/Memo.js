@@ -15,6 +15,7 @@ var memoSchema = new Schema({
   reasons: {type: String, required: true},
   valid: {type: Boolean, default: false},
   url: {type: String, required: false},
+  number: {type: Number, required: true},
 });
 
 module.exports = mongoose.model('Memo', memoSchema)
