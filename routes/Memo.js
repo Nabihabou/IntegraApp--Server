@@ -30,7 +30,7 @@ module.exports = {
                 var entropy = randomstring.generate(parseInt(Math.random()) * 100);
                 var entropy_time = (new Date()).valueOf().toString();
                 var new_memo = new Memo({
-                    author: obj._id,
+                    author: obj.google_name,
                     to: req.body.to,
                     description: req.body.description,
                     assunt: req.body.assunt,
