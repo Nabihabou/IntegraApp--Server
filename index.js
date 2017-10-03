@@ -111,10 +111,11 @@ app.put('/api/frequency', routes.frequency.put);
 // app.get('/api/request', routes.request.get);
 // app.post('/api/request', routes.request.post);
 
-/// memorando and oficies routes
-app.get('/api/memo', routes.Memo.get);
-app.post('/api/memo/create', routes.Memo.post);
-app.get('/api/memo/confirmation/', routes.Memo.confirmation);
+/// memorando and oficies routes 
+/// routes disabled
+// app.get('/api/memo', routes.Memo.get);
+// app.post('/api/memo/create', routes.Memo.post);
+// app.get('/api/memo/confirmation/', routes.Memo.confirmation);
 
 app.use(express.static('static'));
 

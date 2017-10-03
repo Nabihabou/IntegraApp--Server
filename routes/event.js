@@ -27,6 +27,7 @@ module.exports = {
           author: obj._id,
           place: req.body.place,
           project: mongoose.Types.ObjectId(req.body.project),
+          projectName: req.body.projectName,
           startsAt: new Date(req.body.startsAt),
           endsAt: new Date(req.body.endsAt)
         });
