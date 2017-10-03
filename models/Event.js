@@ -9,7 +9,7 @@ if (!mongoose.connection.readyState == 0) {
 var eventSchema = new Schema({
   author: {type: Schema.Types.ObjectId, required: true},
   project: {type: Schema.Types.ObjectId, required: true},
-  projectName: {Type:Stringm, required: true},
+  projectName: {Type:String, required: true},
   place: {type: String, required: true},
   title: {type: String, required: true},
   description: String,
