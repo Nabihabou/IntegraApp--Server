@@ -1,5 +1,6 @@
 var nodemailer = require('nodemailer');
 var crypto = require('crypto');
+var request = require('request');
 
 module.exports = {
 	sendmail: function(authData, data, to) {
@@ -23,4 +24,11 @@ module.exports = {
 			console.log("Message sent: %s ", info );
 		});
 	},
+
+	getId: function(token) {
+		request.get('http://localhost:3000/tokendecode?token=' + token, function(err, response){
+			var profileId = JSON.parse(response.body);
+			return profileId;
+		});
+	}
 }

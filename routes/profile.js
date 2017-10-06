@@ -1,6 +1,7 @@
 var request = require('request');
 var mongoose = require('mongoose');
 var config = require('../config');
+var request = require('request');
 var models = require('../models');
 var jwt = require('jsonwebtoken');
 var helpers = require('../helpers');
@@ -24,7 +25,6 @@ module.exports = {
   },
   edit: function(req, res) {
     var profileId = jwt.decode(req.token, config.secret)._id;
-
     Profile.update({_id: profileId}, {$set: {course: req.body.course, shirt_size: req.body.shirt_size,
                                              begin_course: req.body.begin_course, end_course: req.body.end_course,
                                              gender: req.body.gender, telephone: req.body.telephone,
