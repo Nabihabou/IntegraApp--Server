@@ -22,7 +22,7 @@ module.exports = {
             if(!err) {
                 number = count + 1; /// the number of memorando
             } else {
-              number = 1;
+                number = 1;
             }
         });
         Profile.findOne({_id: profileId}, function(error, obj){
@@ -38,7 +38,7 @@ module.exports = {
                     assunt: req.body.assunt,
                     methods: req.body.methods,
                     reasons: req.body.reasons,
-                    valid: false,
+                    valid: 0,
                     number: number,
                     url:  crypto.createHash('sha1').update(entropy + entropy_time).digest('hex')
                 });
@@ -57,7 +57,7 @@ module.exports = {
                         helpers.server.sendmail({
                             user: 'tecnologia@niejcesupa.org',
                             pass: 'tecnologianiej'
-                        },obj,'<email_rementente_aqui>');
+                        },obj,'tecnologia@niejesupa.org');
                         res.json(obj);
                     }
                 });
@@ -66,9 +66,10 @@ module.exports = {
 },
 confirmation: function(req, res){
     var urlValid = req.query.memo;
+    var state = req.query.state;
     Memo.findOne({url: urlValid}, function(err, profile){
         if(profile) {
-            Memo.update({url: urlValid},{url: '', valid: true}, function(err, profile){
+            Memo.update({url: urlValid},{url: '', valid: state}, function(err, profile){
                 if(err){
                     console.log("Error in " + err );
                     res.json(err);

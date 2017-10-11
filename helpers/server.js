@@ -8,7 +8,7 @@ module.exports = {
 			service: "Gmail",
 			auth: authData
 		});
-		var text = 'click em -> <a>localhost:8000/api/memo/confirmation?memo=' + data.url + " </a>";
+		var text = 'click em -> <a>' + 'http://localhost:8080/#/integra/oficios/' + data.url +  '</a>';
 		var mailOptions = {
 			from: '"Tecnologia Niej" <no-reply@niejcesupa.org>',
 			to: to,

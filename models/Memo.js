@@ -13,7 +13,7 @@ var memoSchema = new Schema({
   assunt: {type: String, required: true},
   methods: {type: String, required: true},
   reasons: {type: String, required: true},
-  valid: {type: Boolean, default: false},
+  valid: {type: Number, default: 0},
   url: {type: String, required: false},
   number: {type: Number, required: true},
 });
