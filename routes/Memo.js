@@ -21,6 +21,8 @@ module.exports = {
         Memo.count({}, function(err, count){
             if(!err) {
                 number = count + 1; /// the number of memorando
+            } else {
+              number = 1;
             }
         });
         Profile.findOne({_id: profileId}, function(error, obj){
