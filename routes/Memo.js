@@ -35,7 +35,7 @@ module.exports = {
                     author: obj.google_name,
                     to: req.body.to,
                     description: req.body.description,
-                    assunt: req.body.assunt,
+                    title: req.body.title,
                     methods: req.body.methods,
                     reasons: req.body.reasons,
                     valid: 0,
