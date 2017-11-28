@@ -10,7 +10,7 @@ var memoSchema = new Schema({
   author: {type: String, required: true},
   to: {type: String, required: true},
   description: {type: String, required: true},
-  assunt: {type: String, required: true},
+  title: {type: String, required: true},
   methods: {type: String, required: true},
   reasons: {type: String, required: true},
   valid: {type: Number, default: 0},

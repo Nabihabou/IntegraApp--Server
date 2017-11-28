@@ -13,7 +13,11 @@ var Project = mongoose.model('Project');
 
 module.exports = {
     get: function(req, res) {
-        Memo.find({},helpers.client.findAll(req, res,"Memo"));
+        if(!req.query.id){
+            Memo.find({},helpers.client.findAll(req, res,"Memo"));
+        }else {
+            Memo.findOne({_id: mongoose.Types.ObjectId(req.query.id)}, helpers.client.findOne(req, res, "Memo"));
+        }
     },
     post: function(req, res) {
         var profileId = jwt.decode(req.token, config.secret)._id;
