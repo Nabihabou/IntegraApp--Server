@@ -19,7 +19,7 @@ var routes          = require('./routes')
 var models          = require('./models');
 
 // create main variables
-var port    =  8000;
+var port    =  8080;
 var app     = module.exports = express();
 
 app.use(morgan('dev'));
