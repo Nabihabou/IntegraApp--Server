@@ -29,7 +29,7 @@ module.exports = {
           project: mongoose.Types.ObjectId(req.body.project),
           projectName: req.body.projectName,
           startsAt: new Date(req.body.startsAt),
-          endsAt: new Date(req.body.endsAt)
+          duration: new Date(req.body.duration)
         });
 
         new_event.save(function(err, obj) {

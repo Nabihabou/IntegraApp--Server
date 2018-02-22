@@ -46,15 +46,25 @@ module.exports = {
 
         new_freq.save(function(err, obj) {
           if(obj) {
-            Project.update({_id: mongoose.Types.ObjectId(req.body.projectId)}, {$push: {frequencies: obj._id}}, function(error, object) {
+            Project.update({
+              _id: mongoose.Types.ObjectId(req.body.projectId)
+            }, {
+              $push: {
+                frequencies: obj._id}
+              }, function(error, object) {
               if (object) {
                 console.log("A frequency was created: ");
                 console.log(JSON.stringify(obj));
-
               }
             });
             var profileId = jwt.decode(req.token, config.secret)._id;
-            Profile.update({_id: profileId}, {$push: {frequencies: obj._id}}, function(err, profile) {
+            Profile.update({
+              _id: profileId
+            }, {
+              $push: {
+                frequencies: obj._id
+              }
+            }, function(err, profile) {
               console.log("Frequency appended to profile");
               console.log(JSON.stringify(profile));
             });
